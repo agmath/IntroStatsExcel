@@ -73,3 +73,24 @@ ggplot() +
   geom_text(aes(x = 2.3, y = 0.25), label = "Critical\nValue", size = 4) +
   theme_bw(base_size = 18) + 
   labs(x = "t", y = "")
+
+x_vals <- seq(-4, 4, length.out = 500)
+x_shade <- seq(-4, qt(0.025, df = 41), length.out = 250)
+t41 <- dt(x, df = 41)
+t41_shade <- dt(x_shade, df = 41)
+
+ggplot() + 
+  geom_ribbon(aes(x = x_shade, ymin = 0, ymax = t41_shade),
+              fill = "purple",
+              alpha = 0.75) +
+  geom_ribbon(aes(x = -x_shade, ymin = 0, ymax = t41_shade),
+              fill = "purple",
+              alpha = 0.75) +
+  geom_line(aes(x = x_vals, y = t41)) + 
+  geom_text(aes(x = -0.1, y = 0.1), label = "0.95", size = 14) +
+  geom_text(aes(x = -3, y = 0.05), label = "0.025", size = 10) +
+  geom_text(aes(x = 3, y = 0.05), label = "0.025", size = 10) +
+  geom_vline(xintercept = qt(0.975, df = 41), lwd = 1.25, linetype = "dashed") +
+  geom_text(aes(x = 2.75, y = 0.25), label = "Critical\nValue", size = 10) +
+  theme_bw(base_size = 18) + 
+  labs(x = "t", y = "")

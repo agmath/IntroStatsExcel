@@ -1,0 +1,73 @@
+---
+title: "Example HTs with Software Output"
+format: html
+---
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse) 
+library(statsr)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| results: false
+#| fig.show: "hide"
+
+intramurals <- tibble(
+  play = sample(c("yes", "no"), prob = c(0.33, 1 - 0.33), replace = TRUE, size = 100)
+)
+
+inference(y = play, data = intramurals, statistic = "proportion", success = "yes", type = "ht", method = "theoretical", null = 0.35, alternative = "less", show_eda_plot = FALSE)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| results: false
+#| fig.show: "hide"
+
+scooter <- tibble(
+  battery_life = rnorm(12, 26.5, 5)
+)
+
+inference(y = battery_life, data = scooter, statistic = "mean", type = "ht", method = "theoretical", null = 25, alternative = "greater", show_eda_plot = FALSE)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| results: false
+#| fig.show: "hide"
+
+streaming <- tibble(
+  hours = rnorm(150, 3.5, 2.5)
+) %>%
+  mutate(hours = ifelse(hours < 0, 0, hours))
+
+inference(y = hours, data = streaming, statistic = "mean", type = "ht", method = "theoretical", null = 3, alternative = "greater", show_eda_plot = FALSE)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| results: false
+#| fig.show: "hide"
+
+subscriptions <- tibble(
+  cable = sample(c("no", "yes"), prob = c(0.65, 1 - 0.65), replace = TRUE, size = 225)
+)
+
+
+inference(y = cable, data = subscriptions, statistic = "proportion", success = "no", type = "ht", method = "theoretical", null = 0.67, alternative = "greater", show_eda_plot = FALSE)
+```
+
+
+
+
+
+
+
